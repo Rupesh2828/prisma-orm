@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://neondb_owner:uLSnEgq1MB6a@ep-late-lab-a55zp63b.us-east-2.aws.neon.tech/neondb?sslmode=require"
+}
+
+//CREATE TABLE users (
+// id SERIAL PRIMARY KEY
+// )
+
+//SERIAL = autoincrement() both are same.they will add id by 1
+//@id means its primary key
+ 
+model User {
+  id Int   @id @default(autoincrement())
+  username String @unique
+  email String @unique
+  firstname String?
+  lastname String?
+  password String
+}
+
+model Todo{
+  id Int @id @default(autoincrement())
+  title String
+  done Boolean @default(false)
+  description String?
+  userId Int
+
+}
