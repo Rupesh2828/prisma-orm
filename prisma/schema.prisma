@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://neondb_owner:uLSnEgq1MB6a@ep-late-lab-a55zp63b.us-east-2.aws.neon.tech/neondb?sslmode=require"
+  url      = env("DATABASE_URL")
 }
 
 //CREATE TABLE users (
@@ -19,21 +19,22 @@ datasource db {
 
 //SERIAL = autoincrement() both are same.they will add id by 1
 //@id means its primary key
- 
+
 model User {
-  id Int   @id @default(autoincrement())
-  username String @unique
-  email String @unique
+  id        Int     @id @default(autoincrement())
+  username  String  @unique
+  email     String  @unique
   firstname String?
-  lastname String?
-  password String
+  lastname  String?
+  password  String
+  todos     Todo[]
 }
 
-model Todo{
-  id Int @id @default(autoincrement())
-  title String
-  done Boolean @default(false)
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  completed   Boolean  @default(false)
   description String?
-  userId Int
-
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id]) // Each Todo belongs to one User
 }
